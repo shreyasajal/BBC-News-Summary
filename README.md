@@ -100,6 +100,6 @@ To deal with the problem of loss of information in long text summarization, we e
 The method descriptions and the code can be found in the long text summarization notebook.
 
 We saw that Map Reduce and Refine method didn't improve the scores. Refine method was expected to increase the score specially on FlanT5( since it is instruction tuned, it was hypothesised that it could process the prompts) but we saw that it didn't help much there also. One of the possible reasons is that the model was finetuned by us for summary generation task so it doesn't understand the prompts to refine the summary based on the new context.
-The Modified Map reduce method gave a significant improvement in score. The results were similar for oher trained models also.
+The Modified Map reduce method gave a significant improvement in score. The results were similar for other trained models also.
 
 
