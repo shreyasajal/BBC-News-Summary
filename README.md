@@ -19,7 +19,7 @@ The text summarization evaluation metrics we used to assess the quality of gener
 
 * ROUGE-Lsum: ROUGE-Lsum is an extension of ROUGE-L that takes into account multiple reference summaries. It computes the longest common subsequence of words between the generated summary and all the reference summaries, considering each reference summary separately. It aims to reward summaries that contain information present in any of the references.
 
-* BERTScore: BERTScore is a metric based on contextual embeddings and similarity estimation using BERT (Bidirectional Encoder Representations from Transformers). It calculates the similarity score between the generated summary and the reference summary at the token level. BERTScore takes into account both precision and recall of the token-level embeddings and provides a continuous score that reflects the quality of the generated summary.
+* [BERTScore](https://github.com/shreyasajal/BBC-News-Summary/blob/main/bertscore.ipynb): BERTScore is a metric based on contextual embeddings and similarity estimation using BERT (Bidirectional Encoder Representations from Transformers). It calculates the similarity score between the generated summary and the reference summary at the token level. BERTScore takes into account both precision and recall of the token-level embeddings and provides a continuous score that reflects the quality of the generated summary.
 
 These metrics evaluate different aspects of the generated summary, including word overlap, sequence similarity, content coverage, and context-awareness. They were used in combination to obtain a comprehensive evaluation of our models.
 
@@ -56,14 +56,14 @@ The training procedure for Flan T5 involves two stages: pre-training and instruc
 ## Performance Comparison
 Below are the validation Rouge 1 scores, as calculated by trainer.metrics function. Note that there might be some difference in the scores calculated via model.generate generated outputs and trainer.predict generated outputs due to the difference in default parameters.Also the training logs show the metrics as calculated via a different method than trainer.metrics that is why the eval rouge in the logs are different from the final validation logs. The log metrics can be used to track the improvement as the training progresses.Whereas the validation and test rouge scores of the best checkpoint can be used to evaluate our model's performances.
 
-| Model       | Validation Rouge1 | Test Rouge1 | No. of epochs | Model size             |
-|-------------|-------------------|-------------|---------------|------------------------|
-| BART-large  | 64.9158           | 63.3473     | 7             | 400 million parameters |
-| BART-base   | 63.9606           | 63.1959     | 20            | 140 million parameters |
-| T5-base     | 62.8756           | 62.6224     | 20            | 220 million parameters |
-| FlanT5-base | 59.9384           | 59.6714     | 20            | 250 million parameters |
+| Model       | Validation Rouge1 | Test Rouge1 | Test BERTScore(f1) | No. of epochs | Model size             |
+|-------------|-------------------|-------------|--------------------|---------------|------------------------|
+| BART-large  | 64.9158           | 63.3473     | 0.911              | 7             | 400 million parameters |
+| BART-base   | 63.9606           | 63.1959     | 0.907              | 20            | 140 million parameters |
+| T5-base     | 62.8756           | 62.6224     | 0.88               | 20            | 220 million parameters |
+| FlanT5-base | 59.9384           | 59.6714     | 0.861              | 20            | 250 million parameters |
 
-We can see that BART-Large is our best performing model and it beats the other model's performance in just 7 epochs. To fit BART-large and FlanT5-base, a batch size of 4 was used and gradient accumulation of 4 was used. Hence, the effective batch size was 16. For all the other models a batch size of 8 with gradient accumulation of 2 was used.
+We can see that BART-Large is our best performing model ( in terms of both Rouge and BERTscore) and it beats the other model's performance in just 7 epochs. To fit BART-large and FlanT5-base, a batch size of 4 was used and gradient accumulation of 4 was used. Hence, the effective batch size was 16. For all the other models a batch size of 8 with gradient accumulation of 2 was used.
 
 ![image](https://github.com/shreyasajal/BBC-News-Summary/assets/58565264/d607aa13-6d3e-4d1c-bea7-a9baf6c9e189)
 ![image](https://github.com/shreyasajal/BBC-News-Summary/assets/58565264/30f610b1-d388-43d0-85fc-714b9b1f67e0)
